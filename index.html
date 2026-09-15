@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Beautiful of Aii — Aura &amp; Cadence</title>
+<meta name="description" content="A timeless collection of cherished moments — The Beautiful of Aii.">
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&family=Manrope:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400;1,600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="dist/output.css">
+
+<style>
+  :root {
+    --primary: #8e4c3b;
+    --primary-light: #d98a76;
+    --secondary: #b07d6e;
+    --bg: #fdf7f4;
+    --surface: rgba(255,255,255,0.7);
+    --text: #231e1b;
+    --text-muted: #7a6b65;
+    --border: rgba(142,76,59,0.15);
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Manrope', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Noise Texture Overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── Background Blobs ── */
+  .blob-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.25;
+    animation: blobFloat 18s ease-in-out infinite;
+  }
+  .blob-1 {
+    width: 60vw; height: 60vw;
+    background: radial-gradient(circle, #e8b4a0 0%, #d98a76 100%);
+    top: -15%; left: -10%;
+    animation-delay: 0s;
+  }
+  .blob-2 {
+    width: 45vw; height: 45vw;
+    background: radial-gradient(circle, #c9a07a 0%, #8e4c3b 100%);
+    top: 40%; right: -10%;
+    animation-delay: -6s;
+  }
+  .blob-3 {
+    width: 35vw; height: 35vw;
+    background: radial-gradient(circle, #f5ddd5 0%, #c8896e 100%);
+    bottom: -5%; left: 25%;
+    animation-delay: -12s;
+  }
+  @keyframes blobFloat {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -40px) scale(1.05); }
+    66% { transform: translate(-20px, 20px) scale(0.97); }
+  }
+
+  /* ── Navigation ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(253,247,244,0.7);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s ease;
+  }
+  .nav-logo {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.25rem;
+    color: var(--text);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-logo:hover { color: var(--primary); }
+  .nav-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Manrope', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+  .nav-badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  /* ── Hero Section ── */
+  .hero {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 3rem;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.4rem 1.2rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(12px);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 10vw, 8rem);
+    font-weight: 300;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--primary);
+    font-weight: 400;
+  }
+  .hero-title-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--text-muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+  .hero-line {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-light), transparent);
+    margin: 0 auto 2.5rem;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+  .hero-quote {
+    font-family: 'EB Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-style: italic;
+    color: var(--text-muted);
+    max-width: 36rem;
+    line-height: 1.8;
+    animation: fadeUp 0.8s 0.25s ease both;
+  }
+  .hero-scroll {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: fadeUp 1s 0.5s ease both;
+  }
+  .hero-scroll-arrow {
+    width: 1px; height: 40px;
+    background: linear-gradient(180deg, var(--primary-light), transparent);
+    animation: scrollArrow 2s ease-in-out infinite;
+  }
+  @keyframes scrollArrow {
+    0%, 100% { transform: scaleY(1); opacity: 1; }
+    50% { transform: scaleY(0.6); opacity: 0.4; }
+  }
+
+  /* ── Gallery Section ── */
+  .gallery-section {
+    position: relative;
+    z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 5rem 2rem 8rem;
+  }
+  .gallery-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+  .gallery-header-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border));
+  }
+  .gallery-header-text {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--primary);
+    white-space: nowrap;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  @media (max-width: 640px) {
+    .gallery-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── Photo Card ── */
+  .photo-card {
+    position: relative;
+    border-radius: 1.5rem;
+    overflow: hidden;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px -8px rgba(35,30,27,0.1), 0 2px 8px -2px rgba(35,30,27,0.05);
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.5s ease;
+    animation: fadeUp 0.8s ease both;
+    cursor: default;
+  }
+  .photo-card:nth-child(2) { animation-delay: 0.1s; }
+  .photo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 32px 64px -16px rgba(35,30,27,0.18), 0 8px 24px -8px rgba(142,76,59,0.1);
+  }
+  .photo-card-image-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+  }
+  .photo-card-image-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    display: block;
+  }
+  .photo-card:hover .photo-card-image-wrap img {
+    transform: scale(1.06);
+  }
+  .photo-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 40%,
+      rgba(35,20,15,0.65) 100%
+    );
+  }
+  .photo-card-date {
+    position: absolute;
+    bottom: 1rem; left: 1rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 9999px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.25);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.95);
+    letter-spacing: 0.05em;
+  }
+  .photo-card-index {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    width: 2rem; height: 2rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: rgba(255,255,255,0.9);
+  }
+  .photo-card-body {
+    padding: 1.5rem;
+  }
+  .photo-card-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.75rem;
+  }
+  .photo-card-location {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--primary);
+  }
+  .photo-card-tag {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+  }
+  .photo-card-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    transition: color 0.2s;
+  }
+  .photo-card:hover .photo-card-title { color: var(--primary); }
+  .photo-card-quote {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+  }
+  .photo-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .photo-card-footer-time { color: var(--primary); }
+
+  /* ── Footer Quote ── */
+  .footer-quote {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 3rem 2rem 2rem;
+  }
+  .footer-quote p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--primary);
+    letter-spacing: 0.03em;
+    opacity: 0.8;
+  }
+
+  /* ── Floating Music Player ── */
+  .music-dock {
+    position: fixed;
+    bottom: 1.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+    width: min(90vw, 420px);
+    padding: 0.875rem 1.25rem;
+    border-radius: 9999px;
+    background: rgba(253,247,244,0.88);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(142,76,59,0.2);
+    box-shadow:
+      0 24px 48px -12px rgba(35,30,27,0.18),
+      0 8px 16px -4px rgba(35,30,27,0.08),
+      inset 0 1px 0 rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: box-shadow 0.3s ease;
+  }
+  .music-dock:hover {
+    box-shadow:
+      0 32px 64px -12px rgba(35,30,27,0.22),
+      0 8px 24px -4px rgba(142,76,59,0.12),
+      inset 0 1px 0 rgba(255,255,255,0.8);
+  }
+  .music-dock-cover-wrap {
+    position: relative;
+    width: 2.4rem; height: 2.4rem;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    padding: 2px;
+    box-shadow: 0 4px 12px -2px rgba(142,76,59,0.4);
+  }
+  .music-dock-cover {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: vinyl-spin 14s linear infinite;
+    animation-play-state: paused;
+  }
+  @keyframes vinyl-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  .music-dock-center {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+  }
+  .music-dock-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .music-dock-artist {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    margin-top: 0.1rem;
+  }
+  .music-dock-waves {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 1rem;
+    flex-shrink: 0;
+  }
+  .music-dock-waves span {
+    display: block;
+    width: 2px;
+    border-radius: 9999px;
+    background: var(--primary-light);
+  }
+  .w1 { animation: wave 1.2s ease-in-out infinite; }
+  .w2 { animation: wave 0.9s ease-in-out infinite 0.2s; }
+  .w3 { animation: wave 1.5s ease-in-out infinite 0.4s; }
+  .w4 { animation: wave 1.1s ease-in-out infinite 0.1s; }
+  @keyframes wave {
+    0%, 100% { height: 3px; }
+    50% { height: 14px; }
+  }
+  .wave-paused { animation-play-state: paused !important; }
+
+  .music-dock-btn {
+    width: 2.4rem; height: 2.4rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px -2px rgba(142,76,59,0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .music-dock-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 18px -2px rgba(142,76,59,0.5);
+  }
+  .music-dock-btn:active { transform: scale(0.96); }
+  .music-dock-btn .material-symbols-outlined { font-size: 1.2rem; }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Cute Background Decorations ── */
+  .deco-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  /* Floating hearts */
+  .heart {
+    position: absolute;
+    font-size: 1rem;
+    opacity: 0;
+    animation: floatHeart linear infinite;
+  }
+  @keyframes floatHeart {
+    0%   { transform: translateY(110vh) rotate(-15deg) scale(0.6); opacity: 0; }
+    10%  { opacity: 0.35; }
+    90%  { opacity: 0.2; }
+    100% { transform: translateY(-10vh) rotate(15deg) scale(1); opacity: 0; }
+  }
+  .heart:nth-child(1)  { left: 5%;  font-size:0.9rem; animation-duration:14s; animation-delay:0s; }
+  .heart:nth-child(2)  { left: 15%; font-size:1.2rem; animation-duration:18s; animation-delay:3s; }
+  .heart:nth-child(3)  { left: 28%; font-size:0.7rem; animation-duration:12s; animation-delay:6s; }
+  .heart:nth-child(4)  { left: 42%; font-size:1rem;   animation-duration:16s; animation-delay:1s; }
+  .heart:nth-child(5)  { left: 55%; font-size:0.8rem; animation-duration:20s; animation-delay:8s; }
+  .heart:nth-child(6)  { left: 68%; font-size:1.1rem; animation-duration:15s; animation-delay:4s; }
+  .heart:nth-child(7)  { left: 80%; font-size:0.7rem; animation-duration:13s; animation-delay:11s; }
+  .heart:nth-child(8)  { left: 90%; font-size:0.9rem; animation-duration:17s; animation-delay:7s; }
+
+  /* Twinkling stars */
+  .star {
+    position: absolute;
+    color: var(--primary-light);
+    animation: starTwinkle ease-in-out infinite;
+    opacity: 0.4;
+  }
+  @keyframes starTwinkle {
+    0%, 100% { opacity: 0.15; transform: scale(0.8) rotate(0deg); }
+    50%       { opacity: 0.6;  transform: scale(1.2) rotate(20deg); }
+  }
+  .star:nth-child(1)  { top: 8%;  left: 10%; font-size:0.8rem; animation-duration:3s; animation-delay:0s; }
+  .star:nth-child(2)  { top: 15%; left: 80%; font-size:1rem;   animation-duration:4s; animation-delay:1s; }
+  .star:nth-child(3)  { top: 30%; left: 20%; font-size:0.6rem; animation-duration:2.5s; animation-delay:0.5s; }
+  .star:nth-child(4)  { top: 22%; left: 60%; font-size:1.1rem; animation-duration:5s; animation-delay:2s; }
+  .star:nth-child(5)  { top: 50%; left: 5%;  font-size:0.7rem; animation-duration:3.5s; animation-delay:1.5s; }
+  .star:nth-child(6)  { top: 60%; left: 88%; font-size:0.9rem; animation-duration:4.5s; animation-delay:0.8s; }
+  .star:nth-child(7)  { top: 75%; left: 35%; font-size:0.7rem; animation-duration:3s; animation-delay:3s; }
+  .star:nth-child(8)  { top: 82%; left: 70%; font-size:1rem;   animation-duration:5s; animation-delay:0.3s; }
+  .star:nth-child(9)  { top: 90%; left: 15%; font-size:0.8rem; animation-duration:2.8s; animation-delay:2s; }
+  .star:nth-child(10) { top: 5%;  left: 45%; font-size:0.6rem; animation-duration:4s; animation-delay:1.2s; }
+
+  /* Floating petals */
+  .petal {
+    position: absolute;
+    width: 10px; height: 14px;
+    border-radius: 50% 0 50% 0;
+    opacity: 0;
+    animation: driftPetal ease-in-out infinite;
+  }
+  @keyframes driftPetal {
+    0%   { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.3; }
+    50%  { transform: translateY(50vh) translateX(40px) rotate(180deg); }
+    90%  { opacity: 0.15; }
+    100% { transform: translateY(-10vh) translateX(-20px) rotate(360deg); opacity: 0; }
+  }
+  .petal:nth-child(1) { left:8%;  background:rgba(217,138,118,0.5); width:9px;  height:13px; animation-duration:16s; animation-delay:0s; }
+  .petal:nth-child(2) { left:22%; background:rgba(226,180,160,0.5); width:11px; height:15px; animation-duration:20s; animation-delay:4s; }
+  .petal:nth-child(3) { left:38%; background:rgba(200,137,110,0.4); width:8px;  height:12px; animation-duration:13s; animation-delay:9s; }
+  .petal:nth-child(4) { left:55%; background:rgba(217,138,118,0.5); width:10px; height:14px; animation-duration:18s; animation-delay:2s; }
+  .petal:nth-child(5) { left:72%; background:rgba(226,180,160,0.4); width:9px;  height:13px; animation-duration:15s; animation-delay:6s; }
+  .petal:nth-child(6) { left:88%; background:rgba(200,137,110,0.5); width:11px; height:15px; animation-duration:22s; animation-delay:1s; }
+
+  /* Sparkle dots */
+  .sparkle {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--primary-light), transparent);
+    animation: sparklePop ease-in-out infinite;
+    opacity: 0;
+  }
+  @keyframes sparklePop {
+    0%, 100% { transform: scale(0); opacity: 0; }
+    50%       { transform: scale(1); opacity: 0.5; }
+  }
+  .sparkle:nth-child(1) { top:12%; left:30%; width:6px; height:6px; animation-duration:3s; animation-delay:0s; }
+  .sparkle:nth-child(2) { top:40%; left:75%; width:8px; height:8px; animation-duration:4s; animation-delay:1s; }
+  .sparkle:nth-child(3) { top:65%; left:20%; width:5px; height:5px; animation-duration:2.5s; animation-delay:2s; }
+  .sparkle:nth-child(4) { top:80%; left:55%; width:7px; height:7px; animation-duration:3.5s; animation-delay:0.5s; }
+  .sparkle:nth-child(5) { top:25%; left:90%; width:6px; height:6px; animation-duration:5s; animation-delay:1.5s; }
+  .sparkle:nth-child(6) { top:55%; left:45%; width:5px; height:5px; animation-duration:2s; animation-delay:3s; }
+  .sparkle:nth-child(7) { top:92%; left:82%; width:8px; height:8px; animation-duration:4.5s; animation-delay:0.8s; }
+
+</style>
+</head>
+<body>
+
+<!-- Background Blobs -->
+<div class="blob-container">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+
+<!-- Cute Decorations Layer -->
+<div class="deco-layer">
+  <!-- Floating Hearts -->
+  <span class="heart">🤍</span>
+  <span class="heart">🤍</span>
+  <span class="heart">💗</span>
+  <span class="heart">🤍</span>
+  <span class="heart">💗</span>
+  <span class="heart">🤍</span>
+  <span class="heart">💗</span>
+  <span class="heart">🤍</span>
+
+  <!-- Twinkling Stars -->
+  <span class="star">✦</span>
+  <span class="star">✧</span>
+  <span class="star">✦</span>
+  <span class="star">⋆</span>
+  <span class="star">✦</span>
+  <span class="star">✧</span>
+  <span class="star">⋆</span>
+  <span class="star">✦</span>
+  <span class="star">✧</span>
+  <span class="star">✦</span>
+
+  <!-- Floating Petals -->
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+  <div class="petal"></div>
+
+  <!-- Sparkle Dots -->
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+  <div class="sparkle"></div>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <a href="#" class="nav-logo">Aura &amp; Cadence</a>
+  <div class="nav-badge">
+    <div class="nav-badge-dot"></div>
+    <span>Kenangan Abadi</span>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-eyebrow">
+    <span>✦</span>
+    <span>Aura &amp; Cadence · A Love Story</span>
+    <span>✦</span>
+  </div>
+  <h1 class="hero-title">
+    The <em>Beautiful</em>
+  </h1>
+  <p class="hero-title-sub">of Aii</p>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section">
+  <div class="gallery-header">
+    <div class="gallery-header-line" style="background: linear-gradient(90deg, transparent, var(--border));"></div>
+    <span class="gallery-header-text">Momen Abadi · Memories</span>
+    <div class="gallery-header-line" style="background: linear-gradient(90deg, var(--border), transparent);"></div>
+  </div>
+
+  <div class="gallery-grid">
+    <!-- Card 1 -->
+    <div class="photo-card">
+      <div class="photo-card-image-wrap">
+        <img src="foto1.jpg" alt="Kenangan pertama"/>
+        <div class="photo-card-overlay"></div>
+        <div class="photo-card-date">15 September 2026</div>
+        <div class="photo-card-index">01</div>
+      </div>
+      <div class="photo-card-body">
+        <div class="photo-card-meta">
+          <span class="photo-card-tag">Memory &middot; 01</span>
+        </div>
+        <h2 class="photo-card-title">A Radiance Like No Other</h2>
+        <p class="photo-card-quote">"She carries a quiet kind of beauty — the kind that stays with you long after the moment has passed, like the warmth of a golden afternoon."</p>
+        <div class="photo-card-footer">
+          <span>One Moment, Forever</span>
+          <span class="photo-card-footer-time">Always &amp; Forever</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="photo-card">
+      <div class="photo-card-image-wrap">
+        <img src="foto2.jpg" alt="Kenangan kedua"/>
+        <div class="photo-card-overlay"></div>
+        <div class="photo-card-date">15 September 2026</div>
+        <div class="photo-card-index">02</div>
+      </div>
+      <div class="photo-card-body">
+        <div class="photo-card-meta">
+          <span class="photo-card-tag">Memory &middot; 02</span>
+        </div>
+        <h2 class="photo-card-title">The Light That Stays</h2>
+        <p class="photo-card-quote">"Her beauty is not merely what the eyes can see — it radiates from within, soft and enduring, like sunlight that refuses to fade even after dusk."</p>
+        <div class="photo-card-footer">
+          <span>One Moment, Forever</span>
+          <span class="photo-card-footer-time">Always &amp; Forever</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Quote -->
+<div class="footer-quote">
+  <p>"Preserving light before it fades."</p>
+</div>
+
+<!-- Floating Music Dock -->
+<aside class="music-dock" role="region" aria-label="Now Playing">
+  <div class="music-dock-cover-wrap">
+    <img id="mini-player-cover" src="foto1.jpg" alt="Now playing" class="music-dock-cover"/>
+  </div>
+
+  <div class="music-dock-center">
+    <div class="music-dock-title" id="mini-player-title">Indahnya Dirimu</div>
+    <div class="music-dock-artist" id="mini-player-artist">HiVi!</div>
+  </div>
+
+  <div class="music-dock-waves" id="mini-wave">
+    <span class="w1 wave-paused" style="height:3px"></span>
+    <span class="w2 wave-paused" style="height:3px"></span>
+    <span class="w3 wave-paused" style="height:3px"></span>
+    <span class="w4 wave-paused" style="height:3px"></span>
+  </div>
+
+  <button class="music-dock-btn" id="mini-btn-play" type="button" aria-label="Play or Pause">
+    <span class="material-symbols-outlined" id="mini-play-icon">play_arrow</span>
+  </button>
+</aside>
+
+<audio id="audio-element" loop>
+  <source src="music/HiVi_-_Indahnya_Dirimu_(mp3.pm).mp3" type="audio/mpeg">
+</audio>
+<script src="app.js"></script>
+</body>
+</html>
