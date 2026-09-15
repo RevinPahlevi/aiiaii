@@ -1,0 +1,13 @@
+# Dependencies
+node_modules/
+
+# Build output - keep dist/output.css tracked in git
+# dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+*.log
